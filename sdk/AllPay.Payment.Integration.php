@@ -646,7 +646,7 @@ class Send extends Aio
         $szHtml .=         "<form id=\"__allpayForm\" method=\"post\" target=\"{$target}\" action=\"{$ServiceURL}\">";
         
         foreach ($arParameters as $keys => $value) {
-            $szHtml .=         "<input type=\"hidden\" name=\"{$keys}\" value='{$value}' />";
+            $szHtml .=         "<input type=\"hidden\" name=\"{$keys}\" value=\"{$value}\" />";
         }
 
         $szHtml .=             "<input type=\"hidden\" name=\"CheckMacValue\" value=\"{$szCheckMacValue}\" />";
@@ -675,7 +675,7 @@ class Send extends Aio
         $szHtml .=         "<form id=\"__allpayForm\" method=\"post\" target=\"{$target}\" action=\"{$ServiceURL}\">";
 
         foreach ($arParameters as $keys => $value) {
-            $szHtml .=         "<input type=\"hidden\" name=\"{$keys}\" value='{$value}' />";
+            $szHtml .=         "<input type=\"hidden\" name=\"{$keys}\" value=\"{$value}\" />";
         }
 
         $szHtml .=             "<input type=\"hidden\" name=\"CheckMacValue\" value=\"{$szCheckMacValue}\" />";
@@ -946,7 +946,7 @@ class TradeNoAio extends Aio
         $szHtml .=         "<form id=\"__allpayForm\" method=\"post\" target=\"{$target}\" action=\"{$ServiceURL}\">";
         
         foreach ($arParameters as $keys => $value) {
-            $szHtml .=         "<input type=\"hidden\" name=\"{$keys}\" value='{$value}' />";
+            $szHtml .=         "<input type=\"hidden\" name=\"{$keys}\" value=\"{$value}\" />";
         }
 
         $szHtml .=             "<input type=\"hidden\" name=\"CheckMacValue\" value=\"{$szCheckMacValue}\" />";
@@ -1012,7 +1012,7 @@ class FundingReconDetail extends Aio
         $szHtml .=         "<form id=\"__allpayForm\" method=\"post\" target=\"{$target}\" action=\"{$ServiceURL}\">";
         
         foreach ($arParameters as $keys => $value) {
-            $szHtml .=         "<input type=\"hidden\" name=\"{$keys}\" value='{$value}' />";
+            $szHtml .=         "<input type=\"hidden\" name=\"{$keys}\" value=\"{$value}\" />";
         }
 
         $szHtml .=             "<input type=\"hidden\" name=\"CheckMacValue\" value=\"{$szCheckMacValue}\" />";

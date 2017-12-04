@@ -23,7 +23,7 @@
 
 
 ## 4. 聯絡我們
-  - 歐付寶技術客服信箱: techsupport@opay.com.tw
+  - 歐付寶技術客服信箱: techsupport@opay.tw
 
 
 

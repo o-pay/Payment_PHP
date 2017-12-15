@@ -1,6 +1,6 @@
 <?php
 /**
-*    Credit信用卡付款產生訂單範例，參數說明請參考SDK技術文件(https://www.allpay.com.tw/Content/files/allpay_047.pdf)
+*    Credit信用卡付款產生訂單範例，參數說明請參考SDK技術文件(https://www.opay.tw/Content/files/allpay_047.pdf)
 */
     
     //載入SDK(路徑可依系統規劃自行調整)
@@ -10,14 +10,14 @@
     	$obj = new AllInOne();
    
         //服務參數
-        $obj->ServiceURL  = "https://payment-stage.allpay.com.tw/Cashier/AioCheckOut/V2";   //服務位置
+        $obj->ServiceURL  = "https://payment-stage.opay.tw/Cashier/AioCheckOut/V2";   //服務位置
         $obj->HashKey     = '5294y06JbISpM5x9' ;                                            //測試用Hashkey，請自行帶入AllPay提供的HashKey
         $obj->HashIV      = 'v77hoKGq4kWxNNIS' ;                                            //測試用HashIV，請自行帶入AllPay提供的HashIV
         $obj->MerchantID  = '2000132';                                                      //測試用MerchantID，請自行帶入AllPay提供的MerchantID
 
 
         //基本參數(請依系統規劃自行調整)
-        $obj->Send['ReturnURL']         = "http://www.allpay.com.tw/receive.php" ;    //付款完成通知回傳的網址
+        $obj->Send['ReturnURL']         = "http://www.opay.tw/receive.php" ;    //付款完成通知回傳的網址
         $obj->Send['MerchantTradeNo']   = "Test".time() ;                             //訂單編號
         $obj->Send['MerchantTradeDate'] = date('Y/m/d H:i:s');                        //交易時間
         $obj->Send['TotalAmount']       = 2000;                                       //交易金額
@@ -47,7 +47,7 @@
         /*
         $obj->Send['InvoiceMark'] = InvoiceState::Yes;
         $obj->SendExtend['RelateNumber'] = $MerchantTradeNo;
-        $obj->SendExtend['CustomerEmail'] = 'test@allpay.com.tw';
+        $obj->SendExtend['CustomerEmail'] = 'test@opay.tw';
         $obj->SendExtend['CustomerPhone'] = '0911222333';
         $obj->SendExtend['TaxType'] = TaxType::Dutiable;
         $obj->SendExtend['CustomerAddr'] = '台北市南港區三重路19-2號5樓D棟';

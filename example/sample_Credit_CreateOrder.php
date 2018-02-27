@@ -32,7 +32,6 @@
         //Credit信用卡分期付款延伸參數(可依系統需求選擇是否代入)
         //以下參數不可以跟信用卡定期定額參數一起設定
         $obj->SendExtend['CreditInstallment'] = '' ;    //分期期數，預設0(不分期)，信用卡分期可用參數為:3,6,12,18,24
-        $obj->SendExtend['InstallmentAmount'] = 0 ;    //使用刷卡分期的付款金額，預設0(不分期)
         $obj->SendExtend['Redeem'] = false ;           //是否使用紅利折抵，預設false
         $obj->SendExtend['UnionPay'] = false;          //是否為聯營卡，預設false;
 

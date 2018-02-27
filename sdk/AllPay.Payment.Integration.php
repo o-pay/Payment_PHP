@@ -1507,7 +1507,6 @@ class allPay_Credit extends Verification
 {
     public $arPayMentExtend = array(
                                     "CreditInstallment" => '',
-                                    "InstallmentAmount" => 0, 
                                     "Redeem"            => FALSE, 
                                     "PeriodAmount"      => '',
                                     "PeriodType"        => '',  

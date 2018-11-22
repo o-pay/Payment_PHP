@@ -1,40 +1,58 @@
 <?php
-
-    // 付款結果通知
+/**
+*   請確認該目錄擁有寫入檔案權限
+*/
+    
+    //載入SDK(路徑可依系統規劃自行調整)
     include('AllPay.Payment.Integration.php');
-
     try {
-        // 收到歐付寶的付款結果訊息，並判斷檢查碼是否相符
-        $AL = new AllInOne();
-        $AL->HashKey = '5294y06JbISpM5x9';
-        $AL->HashIV = 'v77hoKGq4kWxNNIS';
-        $AL->CheckOutFeedback();
+        
+            $obj = new AllInOne();
 
-        // 以付款結果訊息進行相對應的處理
-        /** 
-        回傳的歐付寶的付款結果訊息如下:
-        Array
-        (
-            [MerchantID] =>
-            [MerchantTradeNo] =>
-            [StoreID] =>
-            [RtnCode] =>
-            [RtnMsg] =>
-            [TradeNo] =>
-            [TradeAmt] =>
-            [PayAmt] =>
-            [RedeemAmt] =>
-            [PaymentDate] =>
-            [PaymentType] =>
-            [PaymentTypeChargeFee] =>
-            [TradeDate] =>
-            [SimulatePaid] =>
-            [CheckMacValue] =>
-        )
-        */
+            /* 服務參數 */
+            $obj->HashKey  = '5294y06JbISpM5x9' ;
+            $obj->HashIV   =  'v77hoKGq4kWxNNIS' ;        
+            $obj->MerchantID   = '2000132';   
+            $obj->EncryptType = EncryptType::ENC_SHA256;
 
-        // 在網頁端回應 1|OK
-        echo '1|OK';
-    } catch(Exception $e) {
-        echo '0|' . $e->getMessage();
-    }
+            /* 取得回傳參數 */
+            $arFeedback = $obj->CheckOutFeedback();
+
+            // 參數寫入檔案
+            if(true)
+            {
+                $sLog_Path  = __DIR__.'/sample_payment_return.log' ; // LOG路徑
+                $sLog = '+++++++++++++++++++++++++++++++++++++++ 接收回傳參數 ' . date('Y-m-d H:i:s') . ' ++++++++++++++++++++++++++++++++++++++++++++' . "\n";
+                $fp=fopen($sLog_Path, "a+");
+                fputs($fp, $sLog);
+                fclose($fp);
+
+                $sLog_File =  print_r($arFeedback, ture). "\n";
+                $fp=fopen($sLog_Path, "a+");
+                fputs($fp, $sLog_File);
+                fclose($fp);
+            }
+
+            echo '1|OK' ;
+
+
+
+    } catch (Exception $e) {
+        if(true)
+        {
+            $sLog_Path  = __DIR__.'/sample_payment_return.log' ; // LOG路徑
+            $sLog = '+++++++++++++++++++++++++++++++++++++++ 接收回傳參數(ERROR) ' . date('Y-m-d H:i:s') . ' ++++++++++++++++++++++++++++++++++++++++++++' . "\n";
+            $fp=fopen($sLog_Path, "a+");
+            fputs($fp, $sLog);
+            fclose($fp);
+
+            $sLog_File =  $e->getMessage(). "\n";
+            $fp=fopen($sLog_Path, "a+");
+            fputs($fp, $sLog_File);
+            fclose($fp);
+        }
+    } 
+
+
+ 
+?>

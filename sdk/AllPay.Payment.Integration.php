@@ -31,15 +31,19 @@ abstract class PaymentMethod {
     const CVS = 'CVS';
 
     /**
-     * 財付通。
+     * 銀行快付。
      */
-    const Tenpay = 'Tenpay';
+    const AccountLink = 'AccountLink';
 
     /**
      * 儲值消費。
      */
     const TopUpUsed = 'TopUpUsed';
 
+    /**
+     * 微信支付。
+     */
+    const WeiXinpay = 'WeiXinpay';
 }
 
 /**
@@ -192,12 +196,7 @@ abstract class PaymentMethodItem {
      * 7-11 ibon代碼繳款。
      */
     const CVS_IBON = 'IBON';
-    // 其他第三方支付類(301~400)
-
-    /**
-     * 財付通。
-     */
-    const Tenpay = 'Tenpay';
+    
     // 儲值/餘額消費類(401~500)
     /**
      * 儲值/餘額消費(歐付寶)
@@ -219,7 +218,6 @@ abstract class PaymentMethodItem {
      * 貨到付款。
      */
     const COD = 'COD';
-
 }
 
 /**
@@ -236,7 +234,6 @@ abstract class ExtraPaymentInfo {
      * 不需要額外付款資訊。
      */
     const No = 'N';
-
 }
 
 /**
@@ -253,7 +250,6 @@ abstract class DeviceType {
      * 行動裝置版付費頁面。
      */
     const Mobile = 'M';
-
 }
 
 /**
@@ -280,7 +276,6 @@ abstract class ActionType {
      * 放棄
      */
     const N = 'N';
-
 }
 
 /**
@@ -307,7 +302,6 @@ abstract class PeriodType {
      * 日
      */
     const Day = 'D';
-
 }
 
 /**
@@ -325,82 +319,95 @@ abstract class InvoiceState {
     const No = '';
 }
 
-/**
- * 電子發票載具類別
- */
-abstract class CarruerType {
-  // 無載具
-  const None = '';
-  
-  // 會員載具
-  const Member = '1';
-  
-  // 買受人自然人憑證
-  const Citizen = '2';
-  
-  // 買受人手機條碼
-  const Cellphone = '3';
+if(!class_exists('CarruerType'))
+{
+    // 電子發票載具類別
+    abstract class CarruerType
+    {
+        // 無載具
+        const None = '';
+      
+        // 會員載具
+        const Member = '1';
+      
+        // 買受人自然人憑證
+        const Citizen = '2';
+      
+        // 買受人手機條碼
+        const Cellphone = '3';
+    }
 }
 
-/**
- * 電子發票列印註記
- */
-abstract class PrintMark {
-  // 不列印
-  const No = '0';
-  
-  // 列印
-  const Yes = '1';
+if(!class_exists('PrintMark'))
+{
+    // 電子發票列印註記
+    abstract class PrintMark
+    {
+        // 不列印
+        const No = '0';
+      
+        // 列印
+        const Yes = '1';
+    }
 }
 
-/**
- * 電子發票捐贈註記
- */
-abstract class Donation {
-  // 捐贈
-  const Yes = '1';
-  
-  // 不捐贈
-  const No = '2';
+if(!class_exists('Donation'))
+{
+    // 電子發票捐贈註記
+    abstract class Donation
+    {
+        // 捐贈
+        const Yes = '1';
+      
+        // 不捐贈
+        const No = '2';
+    }
 }
 
-/**
- * 通關方式
- */
-abstract class ClearanceMark {
-  // 經海關出口
-  const Yes = '1';
-  
-  // 非經海關出口
-  const No = '2';
+
+if(!class_exists('ClearanceMark'))
+{
+    // 通關方式
+    abstract class ClearanceMark
+    {
+        // 經海關出口
+        const Yes = '1';
+      
+        // 非經海關出口
+        const No = '2';
+    }
 }
 
-/**
- * 課稅類別
- */
-abstract class TaxType {
-  // 應稅
-  const Dutiable = '1';
-  
-  // 零稅率
-  const Zero = '2';
-  
-  // 免稅
-  const Free = '3';
-  
-  // 應稅與免稅混合(限收銀機發票無法分辦時使用，且需通過申請核可)
-  const Mix = '9';
+if(!class_exists('TaxType'))
+{
+    // 課稅類別
+    abstract class TaxType
+    {
+        // 應稅
+        const Dutiable = '1';
+      
+        // 零稅率
+        const Zero = '2';
+      
+        // 免稅
+        const Free = '3';
+      
+        // 應稅與免稅混合(限收銀機發票無法分辦時使用，且需通過申請核可)
+        const Mix = '9';
+    }
 }
 
-/**
- * 字軌類別
- */
-abstract class InvType {
-  // 一般稅額
-  const General = '07';
-  
-  // 特種稅額
-  const Special = '08';
+if(!class_exists('InvType'))
+{
+    // 字軌類別
+    abstract class InvType
+    {
+        // 一般稅額
+        const General = '07';
+      
+        // 特種稅額
+        const Special = '08';
+    }
 }
 
 abstract class EncryptType {
@@ -595,14 +602,13 @@ abstract class Aio
 
 		return $rs;
     }
-
 }
 
 /**
 *  產生訂單
 */
 class Send extends Aio
-{   
+{
     //付款方式物件
     public static $PaymentObj ;
 
@@ -685,9 +691,7 @@ class Send extends Aio
         $szHtml .= '</html>';
         return  $szHtml ;
     }
-
 }
-
 
 class CheckOutFeedback extends Aio 
 {
@@ -705,7 +709,6 @@ class CheckOutFeedback extends Aio
             if ($keys != 'CheckMacValue') {
                 if ($keys == 'PaymentType') {
                     $value = str_replace('_CVS', '', $value);
-                    $value = str_replace('_Tenpay', '', $value);
                     $value = str_replace('_CreditCard', '', $value);
                 }
                 if ($keys == 'PeriodType') {
@@ -730,7 +733,6 @@ class CheckOutFeedback extends Aio
         return $arFeedback;
     }
 }
-
 
 class QueryTradeInfo extends Aio
 {
@@ -783,7 +785,6 @@ class QueryTradeInfo extends Aio
     }    
 }
 
-
 class QueryPeriodCreditCardTradeInfo extends Aio
 {
     static function CheckOut($arParameters = array(),$HashKey ='',$HashIV ='',$ServiceURL = ''){
@@ -818,7 +819,6 @@ class QueryPeriodCreditCardTradeInfo extends Aio
         return $arFeedback ;
     }
 }
-
 
 class DoAction extends Aio
 {
@@ -859,8 +859,6 @@ class DoAction extends Aio
     }
 }
 
-
-
 class AioChargeback extends Aio
 {
     static function CheckOut($arParameters = array(), $HashKey='',$HashIV='',$ServiceURL=''){
@@ -892,7 +890,6 @@ class AioChargeback extends Aio
 
     }
 }
-
 
 class AioCapture extends Aio
 {
@@ -928,7 +925,7 @@ class AioCapture extends Aio
 }
 
 class TradeNoAio extends Aio
-{   
+{
     static function CheckOut($target = "_self",$arParameters = array(),$HashKey='',$HashIV='',$ServiceURL=''){
         //產生檢查碼
         $EncryptType = $arParameters['EncryptType'];
@@ -994,7 +991,7 @@ class QueryTrade extends Aio
 }
 
 class FundingReconDetail extends Aio
-{   
+{
     static function CheckOut($target = "_self",$arParameters = array(),$HashKey='',$HashIV='',$ServiceURL=''){
         //產生檢查碼
         $EncryptType = $arParameters['EncryptType'];
@@ -1025,11 +1022,6 @@ class FundingReconDetail extends Aio
         exit;
     }
 }
-
-
-
-
-
 
 Abstract class Verification
 {
@@ -1421,9 +1413,7 @@ Abstract class Verification
 
         return $arExtend ;
     }
-
 }
-
 
 /**
 *  付款方式：超商代碼
@@ -1445,13 +1435,11 @@ class allPay_CVS extends Verification
         $arExtend = parent::filter_string($arExtend, $InvoiceMark);
         return $arExtend ;
     }
-
 }
 
 /**
 *  付款方式 ATM
 */
-
 class allPay_ATM extends Verification
 {
     public  $arPayMentExtend = array(
@@ -1465,7 +1453,6 @@ class allPay_ATM extends Verification
         $arExtend = parent::filter_string($arExtend, $InvoiceMark);
         return $arExtend ;
     }
-
 }
 
 /**
@@ -1481,15 +1468,14 @@ class allPay_WebATM extends Verification
         $arExtend = parent::filter_string($arExtend, $InvoiceMark);
         return $arExtend ;
     }
-
 }
 
 /**
-* 付款方式：Tenpay
+* 付款方式：AccountLink
 */
-class allPay_Tenpay extends Verification
+class allPay_AccountLink extends Verification
 {
-    public  $arPayMentExtend = array('ExpireTime' => '');
+    public  $arPayMentExtend = array();
 
     //過濾多餘參數
     function filter_string($arExtend = array(),$InvoiceMark = '')
@@ -1497,7 +1483,6 @@ class allPay_Tenpay extends Verification
         $arExtend = parent::filter_string($arExtend, $InvoiceMark);
         return $arExtend ;
     }
-
 }
 
 /**
@@ -1520,7 +1505,6 @@ class allPay_Credit extends Verification
         $arExtend = parent::filter_string($arExtend, $InvoiceMark);
         return $arExtend ;
     }
-
 }
 
 /**
@@ -1534,7 +1518,20 @@ class allPay_TopUpUsed extends Verification
     function filter_string($arExtend = array(),$InvoiceMark = ''){
         return $arExtend ;
     }
+}
 
+/**
+* 付款方式 : 微信支付
+*/
+class allPay_WeiXinpay extends Verification
+{
+    public $arPayMentExtend = array();
+
+    //過濾多餘參數
+    function filter_string($arExtend = array(),$InvoiceMark = ''){
+        $arExtend = parent::filter_string($arExtend, $InvoiceMark);
+        return $arExtend ;
+    }
 }
 
 /**
@@ -1548,14 +1545,13 @@ class allPay_ALL extends Verification
     function filter_string($arExtend = array(),$InvoiceMark = ''){
         return $arExtend ;
     }
-
 }
-
 
 /**
 *  檢查碼
 */
-class CheckMacValue{
+class CheckMacValue
+{
 
     static function generate($arParameters = array(),$HashKey = '' ,$HashIV = '',$encType = 0){
         $sMacValue = '' ;
@@ -1614,8 +1610,6 @@ class CheckMacValue{
     {
         return strcasecmp($a, $b);
     }
-
 }
-
 
 ?>

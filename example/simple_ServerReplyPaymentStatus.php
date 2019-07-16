@@ -2,18 +2,18 @@
 /**
 *   請確認該目錄擁有寫入檔案權限
 */
-    
+
     //載入SDK(路徑可依系統規劃自行調整)
-    include('AllPay.Payment.Integration.php');
+    include('Opay.Payment.Integration.php');
     try {
-        
-            $obj = new AllInOne();
+
+            $obj = new OpayAllInOne();
 
             /* 服務參數 */
-            $obj->HashKey  = '5294y06JbISpM5x9' ;
-            $obj->HashIV   =  'v77hoKGq4kWxNNIS' ;        
-            $obj->MerchantID   = '2000132';   
-            $obj->EncryptType = EncryptType::ENC_SHA256;
+            $obj->HashKey     = '5294y06JbISpM5x9' ;
+            $obj->HashIV      =  'v77hoKGq4kWxNNIS' ;
+            $obj->MerchantID  = '2000132';
+            $obj->EncryptType = OpayEncryptType::ENC_SHA256;
 
             /* 取得回傳參數 */
             $arFeedback = $obj->CheckOutFeedback();
@@ -27,15 +27,13 @@
                 fputs($fp, $sLog);
                 fclose($fp);
 
-                $sLog_File =  print_r($arFeedback, ture). "\n";
+                $sLog_File =  print_r($arFeedback, true). "\n";
                 $fp=fopen($sLog_Path, "a+");
                 fputs($fp, $sLog_File);
                 fclose($fp);
             }
 
             echo '1|OK' ;
-
-
 
     } catch (Exception $e) {
         if(true)
@@ -51,8 +49,8 @@
             fputs($fp, $sLog_File);
             fclose($fp);
         }
-    } 
+    }
 
 
- 
+
 ?>

@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * 付款方式。
  */
@@ -319,7 +319,7 @@ abstract class OpayInvoiceState {
     const No = '';
 }
 
-if(!class_exists('CarruerType', false))
+if(!class_exists('OpayCarruerType', false))
 {
     // 電子發票載具類別
     abstract class OpayCarruerType
@@ -338,7 +338,7 @@ if(!class_exists('CarruerType', false))
     }
 }
 
-if(!class_exists('PrintMark', false))
+if(!class_exists('OpayPrintMark', false))
 {
     // 電子發票列印註記
     abstract class OpayPrintMark
@@ -351,7 +351,7 @@ if(!class_exists('PrintMark', false))
     }
 }
 
-if(!class_exists('Donation', false))
+if(!class_exists('OpayDonation', false))
 {
     // 電子發票捐贈註記
     abstract class OpayDonation
@@ -364,7 +364,7 @@ if(!class_exists('Donation', false))
     }
 }
 
-if(!class_exists('ClearanceMark', false))
+if(!class_exists('OpayClearanceMark', false))
 {
     // 通關方式
     abstract class OpayClearanceMark
@@ -377,7 +377,7 @@ if(!class_exists('ClearanceMark', false))
     }
 }
 
-if(!class_exists('TaxType', false))
+if(!class_exists('OpayTaxType', false))
 {
     // 課稅類別
     abstract class OpayTaxType
@@ -396,7 +396,7 @@ if(!class_exists('TaxType', false))
     }
 }
 
-if(!class_exists('InvType', false))
+if(!class_exists('OpayInvType', false))
 {
     // 字軌類別
     abstract class OpayInvType
@@ -430,7 +430,7 @@ class OpayAllInOne {
     /*
     * @ SDK版本
     */
-    const VERSION         = '1.1.190715';
+    const VERSION         = '1.1.190829';
 
     public $ServiceURL    = 'ServiceURL';
     public $ServiceMethod = 'ServiceMethod';
@@ -443,7 +443,7 @@ class OpayAllInOne {
     public $Query         = 'Query';
     public $Action        = 'Action';
     public $ChargeBack    = 'ChargeBack';
-    public $EncryptType   = OpayEncryptType::ENC_MD5;
+    public $EncryptType   = OpayEncryptType::ENC_SHA256;
 
     function __construct() {
 
@@ -755,7 +755,7 @@ class OpayQueryTradeInfo extends OpayAio
             $arParameters["CheckMacValue"] = OpayCheckMacValue::generate($arParameters,$HashKey,$HashIV,$EncryptType);
 
             // 送出查詢並取回結果。
-            $szResult = parent::ServerPost($arParameters,$ServiceURL);
+            $szResult = static::ServerPost($arParameters,$ServiceURL);
             $szResult = str_replace(' ', '%20', $szResult);
             $szResult = str_replace('+', '%2B', $szResult);
 
@@ -805,7 +805,7 @@ class OpayQueryPeriodCreditCardTradeInfo extends OpayAio
         if (sizeof($arErrors) == 0) {
             $arParameters["CheckMacValue"] = OpayCheckMacValue::generate($arParameters,$HashKey,$HashIV,$EncryptType);
             // 送出查詢並取回結果。
-            $szResult = parent::ServerPost($arParameters,$ServiceURL);
+            $szResult = static::ServerPost($arParameters,$ServiceURL);
             $szResult = str_replace(' ', '%20', $szResult);
             $szResult = str_replace('+', '%2B', $szResult);
 
@@ -840,7 +840,7 @@ class OpayDoAction extends OpayAio
         $szCheckMacValue = OpayCheckMacValue::generate($arParameters,$HashKey,$HashIV,$EncryptType);
         $arParameters["CheckMacValue"] = $szCheckMacValue;
         // 送出查詢並取回結果。
-        $szResult = self::ServerPost($arParameters,$ServiceURL);
+        $szResult = static::ServerPost($arParameters,$ServiceURL);
         // 轉結果為陣列。
         parse_str($szResult, $arResult);
         // 重新整理回傳參數。
@@ -879,7 +879,7 @@ class OpayAioChargeback extends OpayAio
         $szCheckMacValue = OpayCheckMacValue::generate($arParameters,$HashKey,$HashIV,$EncryptType);
         $arParameters["CheckMacValue"] = $szCheckMacValue;
         // 送出查詢並取回結果。
-        $szResult = self::ServerPost($arParameters,$ServiceURL);
+        $szResult = static::ServerPost($arParameters,$ServiceURL);
         // 檢查結果資料。
         if ($szResult == '1|OK') {
             $arFeedback['RtnCode'] = '1';
@@ -911,7 +911,7 @@ class OpayAioCapture extends OpayAio
         $arParameters["CheckMacValue"] = $szCheckMacValue;
 
         // 送出查詢並取回結果。
-        $szResult = self::ServerPost($arParameters,$ServiceURL);
+        $szResult = static::ServerPost($arParameters,$ServiceURL);
 
         // 轉結果為陣列。
         parse_str($szResult, $arResult);
@@ -977,7 +977,7 @@ class OpayQueryTrade extends OpayAio
         if (sizeof($arErrors) == 0) {
             $arParameters["CheckMacValue"] = OpayCheckMacValue::generate($arParameters,$HashKey,$HashIV,$EncryptType);
             // 送出查詢並取回結果。
-            $szResult = parent::ServerPost($arParameters,$ServiceURL);
+            $szResult = static::ServerPost($arParameters,$ServiceURL);
 
             // 轉結果為陣列。
             $arResult = json_decode($szResult,true);
